@@ -6,7 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import loggerExpress from "logger";
-import usersRouter from "./users/users.router";
+import authRouter from "./auth/auth.router";
 import domainsRouter from "./domains/domains.router";
 
 // Router
@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(`${__dirname}/public`));
 
-app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/domains", domainsRouter);
 
 // global error handling

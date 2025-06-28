@@ -1,5 +1,12 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(30),
-    password VARCHAR(30)
+    username VARCHAR(25) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+CREATE TABLE domains (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by INTEGER NOT NULL
 );

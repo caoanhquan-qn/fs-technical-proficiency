@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { spawn } from "child_process";
+import constructQuery from "../helpers/construct-query";
 
 export const validateDomain = async (
   req: Request,
@@ -13,7 +14,7 @@ export const validateDomain = async (
   }
 
   const pythonProcess = spawn("py", [
-    "src/validate_email.dns.py",
+    `${__dirname}/validate_email.dns.py`,
     domain,
     dkimSelector,
   ]);
@@ -63,4 +64,32 @@ export const validateDomain = async (
       details: err.message,
     });
   });
+};
+
+export const addNewDomain = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  const { name, createdBy } = req.body;
+
+  if (!name || !createdBy) {
+    res.status(400).json({ error: "Name and createdBy are required" });
+    return;
+  }
+
+  const query =
+    "INSERT INTO domains (name, created_by) VALUES ($1, $2) RETURNING *";
+
+  try {
+    await constructQuery(query, [name, createdBy]);
+    res.status(201).json({
+      status: "success",
+      name,
+    });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    res.status(500).json({ error: errorMessage });
+  }
 };
