@@ -4,7 +4,6 @@ import { useState } from "react";
 const useLogin = (username: string, password: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [data, setData] = useState(null);
 
   const handleLogin = async (username: string, password: string) => {
     if (!username || !password) {
@@ -13,11 +12,11 @@ const useLogin = (username: string, password: string) => {
     }
     setLoading(true);
     try {
-      const response = await baseAPI.post("/v1/users/login", {
+      const response = await baseAPI.post("/v1/auth/login", {
         username,
         password,
       });
-      setData(response.data);
+      localStorage.setItem("token", response.data.token);
       return true;
     } catch (err: any) {
       setError(err.response?.data?.error ?? "An unknown error occurred");
@@ -30,7 +29,6 @@ const useLogin = (username: string, password: string) => {
   return {
     loading,
     error,
-    data,
     handleLogin,
   };
 };
