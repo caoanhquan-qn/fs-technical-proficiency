@@ -1,9 +1,13 @@
 import React from "react";
-import useDomainList from "../api/useDomainList";
+import { IDomain } from "../interfaces";
 
-const DomainList: React.FC = () => {
-  const { loading, error, domains } = useDomainList();
+type DomainListProps = {
+  loading: boolean;
+  error: string;
+  domains: IDomain[];
+};
 
+const DomainList: React.FC<DomainListProps> = ({ loading, error, domains }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
@@ -12,7 +16,7 @@ const DomainList: React.FC = () => {
       <h2 className="text-xl font-bold mb-4">Domain List</h2>
       <ul style={{ paddingLeft: "1rem" }}>
         {domains?.map((domain) => (
-          <li key={domain.name}>{domain.name}</li>
+          <li key={domain.id}>{domain.name}</li>
         ))}
       </ul>
     </div>

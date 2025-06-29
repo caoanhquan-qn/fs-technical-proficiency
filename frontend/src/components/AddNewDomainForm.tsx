@@ -1,25 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import useAddNewDomain from "../api/useAddNewDomain";
 
-const AddNewDomainForm: React.FC = () => {
-  const [domainName, setDomainName] = React.useState("");
-  const [error, setError] = React.useState("");
+interface AddNewDomainFormProps {
+  onDomainAdded: () => void;
+}
+
+const AddNewDomainForm: React.FC<AddNewDomainFormProps> = ({
+  onDomainAdded,
+}) => {
+  const [domainName, setDomainName] = useState("");
+  const { error, addNewDomain } = useAddNewDomain();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!domainName) {
-      setError("Domain name is required");
-      return;
-    }
-    try {
-      // Call API to add new domain
-      // await addNewDomain(domainName);
-
-      console.log("Domain added:", domainName);
-      setDomainName("");
-      setError("");
-    } catch (err) {
-      setError("Failed to add domain");
-    }
+    await addNewDomain(domainName);
+    setDomainName("");
+    onDomainAdded();
   };
 
   return (

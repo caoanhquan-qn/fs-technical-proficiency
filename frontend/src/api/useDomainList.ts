@@ -27,6 +27,7 @@ const useDomainList = () => {
     loading,
     error,
     domains,
+    fetchDomains,
   };
 };
 
