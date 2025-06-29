@@ -3,10 +3,12 @@ import useAddNewDomain from "../api/useAddNewDomain";
 
 interface AddNewDomainFormProps {
   onDomainAdded: () => void;
+  onDomainSelect: (domainName: string) => void;
 }
 
 const AddNewDomainForm: React.FC<AddNewDomainFormProps> = ({
   onDomainAdded,
+  onDomainSelect,
 }) => {
   const [domainName, setDomainName] = useState("");
   const { error, addNewDomain } = useAddNewDomain();
@@ -16,6 +18,7 @@ const AddNewDomainForm: React.FC<AddNewDomainFormProps> = ({
     await addNewDomain(domainName);
     setDomainName("");
     onDomainAdded();
+    onDomainSelect(domainName); // Set the selected domain to the newly added one
   };
 
   return (
