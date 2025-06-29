@@ -1,37 +1,33 @@
-name: CI for Frontend & Backend
+name: CI for Frontend
 
 on:
   push:
     branches: [main, develop]
     paths:
       - "frontend/**"
-      - "backend/**"
   pull_request:
     branches: [main, develop]
     paths:
       - "frontend/**"
-      - "backend/**"
 
 jobs:
-  ci:
+  frontend-ci:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        component: [frontend, backend]
 
     defaults:
       run:
-        working-directory: ./${{ matrix.component }}
+        working-directory: ./frontend
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
           cache: npm
-          cache-dependency-path: ${{ matrix.component }}/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
