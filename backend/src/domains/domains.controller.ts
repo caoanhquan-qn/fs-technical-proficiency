@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { spawn } from "child_process";
 import constructQuery from "../helpers/construct-query";
 import { GET_ALL_DOMAINS_BY_USER_ID_QUERY } from "./domains.query";
+import { IDomainEntity } from "../interface/domain.interface";
 
 export const validateDomain = async (
   req: Request,
@@ -118,9 +119,14 @@ export const getAllDomains = async (
       userId,
     ]);
 
+    const dataResponse = result.rows.map((row: IDomainEntity) => ({
+      id: row.id,
+      name: row.name,
+    }));
+
     res.status(200).json({
       status: "success",
-      data: result.rows,
+      data: dataResponse,
     });
   } catch (error) {
     const errorMessage =
