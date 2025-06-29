@@ -4,10 +4,10 @@ import jwt from "jsonwebtoken";
 import { StringValue } from "ms";
 import bcrypt from "bcryptjs";
 
-const signToken = (id: string) => {
-  const secret = process.env.JWT_SECRET ?? "secret";
+const signToken = (id: number) => {
+  const JWT_SECRET = process.env.JWT_SECRET ?? "SECRET";
   const expiresIn: StringValue = process.env.JWT_EXPIRES_IN as StringValue;
-  return jwt.sign({ id: id }, secret, {
+  return jwt.sign({ id: id }, JWT_SECRET, {
     expiresIn: expiresIn,
   });
 };

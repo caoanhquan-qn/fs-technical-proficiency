@@ -71,10 +71,17 @@ export const addNewDomain = async (
   res: Response,
   _next: NextFunction
 ) => {
-  const { name, createdBy } = req.body;
+  const { name } = req.body;
 
-  if (!name || !createdBy) {
+  if (!name) {
     res.status(400).json({ error: "Name and createdBy are required" });
+    return;
+  }
+
+  const createdBy = req.user?.id;
+
+  if (!createdBy) {
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
