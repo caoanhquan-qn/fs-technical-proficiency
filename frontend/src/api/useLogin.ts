@@ -1,7 +1,7 @@
 import baseAPI from "./base";
 import { useState } from "react";
 
-const useLogin = (username: string, password: string) => {
+const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 

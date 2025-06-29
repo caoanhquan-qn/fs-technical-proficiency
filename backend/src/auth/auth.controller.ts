@@ -14,18 +14,17 @@ const signToken = (id: number) => {
 
 const sendJWT = (user: any, statusCode: number, res: Response) => {
   const token = signToken(user.id);
+
   const cookieOptions = {
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
     httpOnly: true,
     secure: process.env.NODE_ENV === "production", // Set to true in production
   };
   res.cookie("jwt", token, cookieOptions);
+
   res.status(statusCode).json({
     status: "success",
     token,
-    // data: {
-    //   user,
-    // },
   });
 };
 

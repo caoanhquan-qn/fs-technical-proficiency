@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, error, handleLogin } = useLogin(username, password);
+  const { loading, error, handleLogin } = useLogin();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
