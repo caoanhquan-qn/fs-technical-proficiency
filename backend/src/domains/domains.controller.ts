@@ -75,7 +75,7 @@ export const addNewDomain = async (
   const { name } = req.body;
 
   if (!name) {
-    res.status(400).json({ error: "Name and createdBy are required" });
+    res.status(400).json({ error: "Name are required" });
     return;
   }
 
