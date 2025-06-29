@@ -12,3 +12,6 @@ backend/dist/
 
 # next.js
 frontend/.next/
+
+#compiled output
+backend/dist/

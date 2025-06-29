@@ -1,4 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger.json";
 
 // Middleware
 import cookieParser from "cookie-parser";
@@ -8,8 +10,6 @@ import rateLimit from "express-rate-limit";
 import loggerExpress from "logger";
 import authRouter from "./auth/auth.router";
 import domainsRouter from "./domains/domains.router";
-
-// Router
 
 const logger = loggerExpress.createLogger();
 const app: Application = express();
@@ -34,8 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(`${__dirname}/public`));
 
+// Router
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/domains", domainsRouter);
+
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // global error handling
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
