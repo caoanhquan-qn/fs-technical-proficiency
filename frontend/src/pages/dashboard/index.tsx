@@ -3,8 +3,10 @@ import AddNewDomainForm from "../../components/AddNewDomainForm";
 import DomainList from "../../components/DomainList";
 import useDomainList from "../../api/useDomainList";
 import DomainDetails from "../../components/DomainDetails";
+import useAuth from "../../hooks/useAuth";
 
 export default function Dashboard() {
+  const { isAuthenticated } = useAuth();
   const { loading, error, domains, fetchDomains } = useDomainList();
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
 
@@ -14,6 +16,10 @@ export default function Dashboard() {
       setSelectedDomain(domains[0].name);
     }
   }, [domains, selectedDomain]);
+
+  if (!isAuthenticated) {
+    return;
+  }
 
   const handleDomainSelect = (domainName: string) => {
     setSelectedDomain(domainName);
