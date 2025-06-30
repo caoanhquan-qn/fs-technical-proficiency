@@ -3,6 +3,7 @@ import constructQuery from "../helpers/construct-query";
 import jwt from "jsonwebtoken";
 import { StringValue } from "ms";
 import bcrypt from "bcryptjs";
+import { GET_USER_BY_USERNAME_QUERY } from "./auth.query";
 
 const signToken = (id: number) => {
   const JWT_SECRET = process.env.JWT_SECRET ?? "SECRET";
@@ -49,8 +50,7 @@ export const registerUser = async (
     return;
   }
 
-  const existingUserSql = "SELECT * FROM users WHERE username = $1";
-  const existingUserResult = (await constructQuery(existingUserSql, [
+  const existingUserResult = (await constructQuery(GET_USER_BY_USERNAME_QUERY, [
     username,
   ])) as { rows: any[] };
 
@@ -95,9 +95,11 @@ export const authenticateUser = async (
 
   try {
     // Check if the user exists and validate the password
-    const sql = "SELECT * FROM users WHERE username = $1";
     const params = [username];
-    const result = (await constructQuery(sql, params)) as { rows: any[] };
+    const result = (await constructQuery(
+      GET_USER_BY_USERNAME_QUERY,
+      params
+    )) as { rows: any[] };
     // If no user found, return an error
     if (result.rows.length === 0) {
       res.status(401).json({ error: "Invalid username or password" });
