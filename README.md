@@ -3,15 +3,17 @@
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
-  <ul>
+  <ol>
     <a href="#getting-started">Getting started</a>
       <ol>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#run-database-server">Run database server</a></li>
         <li><a href="#run-backend-server">Run backend server</a></li>
         <li><a href="#run-frontend-server">Run frontend server</a></li>
+        <li><a href="#run-app-within-a-docker-container">Run app within a docker container</a></li>
       </ol>
-  </ul>
+  
+  </ol>
 </details>
 
 ## Getting started
@@ -19,13 +21,18 @@
 ### Installation
 
 - Node.js (22.14.0) <br> [Install Node.js]
+- Python 3
 - Docker Desktop
 
 ### Run database server
 
+- Create database server using Docker
+
 ```bash
 docker run --name postgres-db -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres-db -d postgres:latest
 ```
+
+- Run SQL script in `backend/database/sql_script.sql` to create tables
 
 ### Run backend server
 
@@ -89,6 +96,28 @@ npm install
 
 ```
 npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Run app within a docker container
+
+- Create `.env` files in frontend/ backend folders and input environment variables. NOTE that
+
+```
+DB_HOST=host.docker.internal
+```
+
+- Build
+
+```
+docker compose build
+```
+
+- Run
+
+```
+docker compose up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
