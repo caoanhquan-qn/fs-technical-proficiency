@@ -8,12 +8,16 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState("");
   const [isSignupMode, setIsSignupMode] = useState(false);
   const { loading: loginLoading, error: loginError, handleLogin } = useLogin();
-  const { loading: signupLoading, error: signupError, handleSignup } = useSignup();
+  const {
+    loading: signupLoading,
+    error: signupError,
+    handleSignup,
+  } = useSignup();
   const router = useRouter();
 
   const loading = loginLoading || signupLoading;
   const error = loginError || signupError;
-  
+
   const getButtonText = () => {
     if (loading) return "Processing...";
     return isSignupMode ? "Sign Up" : "Log In";
@@ -21,7 +25,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isSignupMode) {
       const success = await handleSignup(username, password);
       if (success) {
@@ -60,6 +64,7 @@ const LoginForm: React.FC = () => {
         <input
           id="username"
           type="text"
+          autoComplete="username"
           className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -77,6 +82,7 @@ const LoginForm: React.FC = () => {
         <input
           id="password"
           type="password"
+          autoComplete="current-password"
           className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -87,15 +93,15 @@ const LoginForm: React.FC = () => {
       <button
         type="submit"
         className={`w-full text-white py-2 px-4 rounded ${
-          isSignupMode 
-            ? "bg-pink-600 hover:bg-pink-700" 
+          isSignupMode
+            ? "bg-pink-600 hover:bg-pink-700"
             : "bg-blue-600 hover:bg-blue-700"
         }`}
         disabled={loading}
       >
         {getButtonText()}
       </button>
-      
+
       <div className="mt-4 text-center">
         <button
           type="button"
@@ -106,8 +112,8 @@ const LoginForm: React.FC = () => {
           }}
           className="text-blue-600 hover:text-blue-800 text-sm"
         >
-          {isSignupMode 
-            ? "Already have an account? Log in" 
+          {isSignupMode
+            ? "Already have an account? Log in"
             : "Don't have an account? Sign up"}
         </button>
       </div>

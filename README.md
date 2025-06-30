@@ -12,7 +12,7 @@
         <li><a href="#run-frontend-server">Run frontend server</a></li>
         <li><a href="#run-app-within-a-docker-container">Run app within a docker container</a></li>
       </ol>
-  
+    <a href="#how-to-use-the-app">How to use the app</a>
   </ol>
 </details>
 
@@ -121,6 +121,18 @@ docker compose up
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## How to use the app
+
+- Sign up the account
+
+```text
+Username: tester1
+Password: tester1
+```
+
+- Log in by account created above
+- Test functionality
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
