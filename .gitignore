@@ -15,3 +15,5 @@ frontend/.next/
 
 #compiled output
 backend/dist/
+
+postgres-data/
